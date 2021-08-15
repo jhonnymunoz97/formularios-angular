@@ -1,0 +1,118 @@
+<h4>Formularios <small> por Templates </small></h4>
+<hr>
+<form autocomplete="off" (ngSubmit)="save(f)" #f="ngForm">
+
+  <div>
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Nombre</label>
+      <div class="col-8">
+
+        <input class="form-control"
+               type="text"
+               name="name"
+               required
+               #name="ngModel"
+               [class.is-invalid]="name.invalid && name.dirty"
+               [(ngModel)]="user.name"
+               placeholder="Nombre">
+        <span [style.color]="'red'" *ngIf="f.dirty && f.controls.name.dirty && !f.controls.name.valid">El nombre es requerido</span>
+      </div>
+    </div>
+
+    <div class="form-group row mt-2">
+      <label class="col-2 col-form-label">Apellido</label>
+      <div class="col-8">
+
+        <input class="form-control"
+               type="text"
+               name="last_name"
+               required
+               #last_name="ngModel"
+               [class.is-invalid]="last_name.invalid && last_name.dirty"
+               [(ngModel)]="user.last_name"
+               placeholder="Apellido">
+        <span [style.color]="'red'" *ngIf="f.dirty && f.controls.last_name.dirty && !f.controls.last_name.valid">El apellido es requerido</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="form-group row mt-2">
+    <label class="col-2 col-form-label">Correo</label>
+    <div class="col-8">
+
+      <input class="form-control"
+             type="email"
+             name="email"
+             email
+             required
+             #email="ngModel"
+             [class.is-invalid]="email.invalid && email.dirty"
+             [(ngModel)]="user.email"
+             placeholder="Correo electrónico">
+      <span [style.color]="'red'" *ngIf="f.dirty && f.controls.email.dirty && !f.controls.email.valid">Debe ser un email válido</span>
+    </div>
+  </div>
+
+  <div class="form-group row mt-2">
+    <label class="col-2 col-form-label">País</label>
+    <div class="col-8">
+      <select class="form-control" 
+                [style.background]="'rgb(238, 241, 240)'"
+                required 
+                name="pais" 
+                #paises="ngModel" 
+                [(ngModel)]="user.pais"
+                [class.is-invalid]="paises.invalid && paises.dirty"
+      >
+        <option value="" [disabled]="'disabled'">Seleccione...</option>
+        <option [value]="p.codigo" [style.color]="'black'" *ngFor="let p of pais" > {{ p.name }}</option>
+      </select>
+      <span [style.color]="'red'" *ngIf="f.dirty && f.controls.pais.dirty && !f.controls.pais.valid">Debe seleccionar un país</span>
+    </div>
+  </div>
+
+  <div class="form-group row mt-2">
+    <label class="col-2 col-form-label">Género</label>
+    <div class="col-8">
+      <div class="form-check form-check-inline">
+        <input class="form-check-input"
+            type="radio"  
+            id="masculino" 
+            name="genero" 
+            value="M" 
+            required
+            [(ngModel)]="user.genero"
+            #genero="ngModel"
+            [class.is-invalid]="genero.invalid && genero.dirty"
+        >
+        <label for="masculino" class="form-check-label" >Masculino</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input"
+            type="radio"  
+            id="femenino" 
+            name="genero" 
+            value="F" 
+            required
+            [(ngModel)]="user.genero"
+            #genero="ngModel"
+            [class.is-invalid]="genero.invalid && genero.dirty"
+        >
+        <label for="femenino" class="form-check-label"  >Femenino</label>
+      </div>
+      <span [style.color]="'red'" *ngIf="f.dirty && f.controls.genero.dirty && !f.controls.genero.valid">Debe seleccionar un Género</span>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">&nbsp;</label>
+    <div class="col-8">
+        <button type="submit" class="btn btn-outline-primary btn-block col-12 mt-2">
+            Guardar
+          </button>
+      </div>
+  </div>
+
+</form>

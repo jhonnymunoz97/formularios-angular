@@ -1,0 +1,173 @@
+<h4>Formularios <small> Reactivos </small></h4>
+<hr>
+<form autocomplete="off" [formGroup]="form" (ngSubmit)="save()">
+
+  <div>
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Nombre</label>
+      <div class="col">
+
+        <input class="form-control"
+               type="text"
+               name="name"
+               placeholder="Nombre"
+               formControlName="name"
+               [class.is-invalid]="validarCampo('name')"
+               >
+        <span class="text-danger" [class.is-invalid]="validarCampo('name')" *ngIf="validarCampo('name')">
+          Este campo es obligatorio
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group row mt-2">
+      <label class="col-2 col-form-label">Apellido</label>
+      <div class="col">
+
+        <input class="form-control"
+               type="text"
+               name="last_name"
+               placeholder="Apellido"
+               formControlName="last_name"
+               [class.is-invalid]="validarCampo('last_name')"
+               >
+          <span class="text-danger" [class.is-invalid]="validarCampo('last_name')" *ngIf="validarCampo('last_name')">
+                Este campo es obligatorio
+          </span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="form-group row mt-2">
+    <label class="col-2 col-form-label">Correo</label>
+    <div class="col">
+
+      <input class="form-control"
+             type="email"
+             name="email"
+             placeholder="Correo electrónico"
+             formControlName="email"
+             [class.is-invalid]="validarCampo('email')"
+             >
+      <span class="text-danger" [class.is-invalid]="validarCampo('email')" *ngIf="validarCampo('email')">
+              Debe ser un email válido
+      </span>
+    </div>
+  </div>
+
+  <div class="form-group row mt-2">
+    <label class="col-2 col-form-label">Contraseña</label>
+    <div class="col">
+
+      <input class="form-control"
+             type="password"
+             name="password"
+             placeholder="Contraseña"
+             formControlName="password"
+             [class.is-invalid]="validarCampo('password')"
+             >
+      <span class="text-danger" [class.is-invalid]="validarCampo('password')" *ngIf="validarCampo('password') && form.controls.password.value.length<1">
+             La contraseña es requerida
+      </span>
+      <span class="text-danger" [class.is-invalid]="validarCampo('password')" *ngIf="validarCampo('password') && form.controls.password.value.length>0">
+        Debe tener al menos 6 dígitos
+      </span>
+    </div>
+  </div>
+  <div class="form-group row mt-2">
+    <label class="col-2 col-form-label">Repetir Contraseña</label>
+    <div class="col">
+
+      <input class="form-control"
+             type="password"
+             name="passwordConfirm"
+             placeholder="Contraseña"
+             formControlName="passwordConfirm"
+             [class.is-invalid]="validarCampo('passwordConfirm')"
+             >
+      <span class="text-danger" [class.is-invalid]="validarCampo('passwordConfirm')" *ngIf="validarCampo('passwordConfirm') && form.controls.passwordConfirm.value.length<1">
+             La contraseña es requerida
+      </span>
+      <span class="text-danger" [class.is-invalid]="form.controls.passwordConfirm.value.length>0 && confirmPassword()" *ngIf="form.controls.passwordConfirm.value.length>0 && confirmPassword()">
+        Las contraseñas no coinciden
+      </span>
+    </div>
+  </div>
+
+  <div class="form-group row mt-2" formGroupName="direction">
+    <label class="col-2 col-form-label">Dirección</label>
+    <div class="row col">
+        <div class="col">
+            <input class="form-control"
+                   type="text"
+                   name="provincia"
+                   placeholder="Provincia"
+                   formControlName="provincia"
+                   [class.is-invalid]="validarCampo('direction.provincia')"
+                   >
+            <span class="text-danger" [class.is-invalid]="validarCampo('direction.provincia')" *ngIf="validarCampo('direction.provincia')">
+                    Este campo es requerido
+            </span>
+        </div>
+        <div class="col">
+          <input class="form-control"
+                 type="text"
+                 name="ciudad"
+                 placeholder="Ciudad"
+                 formControlName="ciudad"
+                 [class.is-invalid]="validarCampo('direction.ciudad')"
+                 >
+          <span class="text-danger" [class.is-invalid]="validarCampo('direction.ciudad')" *ngIf="validarCampo('direction.ciudad')">
+                  Este campo es requerido
+          </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col">
+      <table class="table">
+        <thead class="bg-dark text-light text-center">
+          <tr>
+            <th>Id</th>
+            <th>Pasatiempos</th>
+            <th>Borrar</th>
+          </tr>
+        </thead>
+        <tbody formArrayName="pasatiempos" *ngFor="let item of pasatiempos.controls; let i = index  " class="text-center">
+          <tr>
+            <td> {{ i+1 }}</td>
+            <td> 
+                <input type="text" class="form-control" [formControlName]="i" placeholder="Nuevo pasatiempo" [class.is-invalid]="validarCampo('pasatiempos')">
+                <span class="text-danger"  *ngIf="validarCampo('pasatiempos')" > El campo es obligatorio  </span>
+            </td>
+            <td>
+                <button class="btn btn-danger" type="button" (click)="deletePasatiempo(i)">Borrar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="row">
+        <button class="btn btn-success  mt-3 mb-5 btn-block" type="button" (click)="addPasatiempo()"> + Agregar </button>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <!-- <label class="col-2 col-form-label">&nbsp;</label> -->
+    <div class="col">
+        <button type="submit" class="btn btn-outline-primary btn-block col-12 mt-2">
+            Guardar
+          </button>
+      </div>
+  </div>
+
+</form>
+
+<hr>
+<!-- {{form.value | json}}
+ -->
+ <p>Estado del formulario: {{ form.valid }}</p>
